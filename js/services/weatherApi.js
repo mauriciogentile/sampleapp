@@ -1,3 +1,5 @@
+"use strict";
+
 angular
   .module("app.services")
   .service("weatherApi", function($http, $q) {
@@ -5,11 +7,13 @@ angular
       getByCity: function(city) {
         var defer = $q.defer();
 
+        //if invalid parameters the promise fails
         if(!city.name || !city.country) {
           defer.reject(new Error("Country or City no spcified!"));
           return defer.promise;
         }
 
+        //TODO: units should be an extra param?
         $http.get("http://api.openweathermap.org/data/2.5/weather?units=imperial&q=" + city.name + "," + city.country)
         .then(function(response) {
           

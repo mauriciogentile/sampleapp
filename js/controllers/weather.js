@@ -1,5 +1,6 @@
+"use strict";
+
 app.controller("weatherCtrl", function($scope, $window, weatherApi) {
-    
     $scope.selectedCity = null;
 
     $scope.select = function(name) {
@@ -9,6 +10,8 @@ app.controller("weatherCtrl", function($scope, $window, weatherApi) {
     //order by is controlled by angular's built-in filters
     $scope.orderBy = "weather.temp";
 
+
+    //hardcoded list of cities
     $scope.cities = [
         { name: "London", country: "GB"},
         { name: "Luton", country: "GB"},
@@ -16,6 +19,7 @@ app.controller("weatherCtrl", function($scope, $window, weatherApi) {
         { name: "Birmingham", country: "GB"}
     ];
 
+    //loop cities to get more information to be shown on the list
     $scope.cities.forEach(function(city) {
       weatherApi.getByCity(city)
       .then(function(data) {
@@ -27,6 +31,7 @@ app.controller("weatherCtrl", function($scope, $window, weatherApi) {
       });
     });
 
+    //TODO: this could be in a helper module maybe
     var find = function(input, name) {
       var i = 0, len = input.length;
       for (; i<len; i++) {
@@ -34,34 +39,5 @@ app.controller("weatherCtrl", function($scope, $window, weatherApi) {
           return input[i];
         }
       }
-      return null;
-    };
-    
-    $scope.mySearchCallback = function(params) {
-
-      var defer = $q.defer();
-
-      $http.jsonp("http://gd.geobytes.com/AutoCompleteCity?callback=JSON_CALLBACK&q=" + params.query)
-        .then(function(response) {
-          if(!response.data) {
-            defer.resolve([]);
-          }
-          var cities = response.data.map(function(city) {
-            var parts = city.split(",");
-            return {
-              fullName: city,
-              city: parts[0],
-              state: parts[1],
-              country: parts[2]
-            };
-          });
-          defer.resolve(cities);
-        })
-        .catch(function(e) {
-          $window.alert(e.message);
-          defer.reject(e);
-        });
-
-        return defer.promise;
     };
 });

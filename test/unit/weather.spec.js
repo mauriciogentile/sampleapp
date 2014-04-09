@@ -64,6 +64,7 @@ describe('weatherCtrl', function() {
     });
 
     it('should have completed weather information when loaded', function() {
+        //necessary for forcing angular to run unmanaged code
         scope.$apply();
 
         scope.select.call(null, "London");
@@ -74,6 +75,8 @@ describe('weatherCtrl', function() {
     });
 
     it('should show error message when api fails', function() {
+
+        //restore original, jasmine raises error if not restored
         _weatherApi.getByCity = _getByCityOriginal;
 
         var defer = q.defer();
@@ -82,6 +85,7 @@ describe('weatherCtrl', function() {
 
         createController();
 
+        //necessary for forcing angular to run unmanaged code
         scope.$apply();
 
         expect(_window.alert).toHaveBeenCalledWith("Error!");
