@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>Weather Station Test</title>
+    <link rel="stylesheet" type="text/css" href="css/vendor/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
+  <body>
+    <div class="container" ng-app="app">
+      <div class="page-header">
+      <h1>Weather Station Test <small>Check out the weather</small></h1>
+      </div>
+      <div ng-controller="weatherCtrl">
+        <div class="panel">
+          <div class="panel-body">
+              <div class="well">
+                  <div class="row">
+                      <div class="col-md-2">
+                          <label>City</label>
+                      </div>
+                      <div class="col-md-2">
+                          <a ng-click="orderBy='weather.temp';reverse=!reverse" href="#"><label>Temp <span>&nbsp;&#186;<span>F</span></label></a>
+                      </div>
+                  </div>
+                  <div ng-cloak class="row" ng-repeat="city in cities | orderBy:orderBy:reverse">
+                    <a ng-click="select(city.name)" href="#">
+                      <div class="col-md-2">{{city.name}}</div>
+                    </a>
+                    <div class="col-md-2">
+                      <span class="label label-success">{{city.weather.temp}}</span>
+                    </div>
+                    <div class="col-md-1"><img src="{{city.weather.icon}}"/></div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div ng-show="selectedCity">
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>{{selectedCity.name}}, {{selectedCity.country}}</h2>
+              <h4>({{selectedCity.coord.lon}}, {{selectedCity.coord.lat}})</span></h4>
+              <h4>{{selectedCity.weather.main}}</span></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-2"><img height=100 src="{{selectedCity.weather.icon}}"/></div>
+                  <div class="col-md-2 temp">{{selectedCity.weather.temp}}<span>&nbsp;&#186;F</span></div>
+                  <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-md-2">Now:</div>
+                        <div class="col-md-4">{{selectedCity.weather.description}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Max/Min:</div>
+                        <div class="col-md-4">{{selectedCity.weather.temp_max}}<span>&nbsp;&#186;F/</span>{{selectedCity.weather.temp_min}}<span>&nbsp;&#186;F</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Pressure:</div>
+                        <div class="col-md-4">{{selectedCity.weather.pressure}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Humidity:</div>
+                        <div class="col-md-4">{{selectedCity.weather.humidity}}%</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="js/services/weatherApi.js"></script>
+    <script type="text/javascript" src="js/controllers/weather.js"></script>
+  </body>
+</html>

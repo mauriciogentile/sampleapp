@@ -1,0 +1,36 @@
+body
+{
+	font-family: arial, sans-serif;
+	font-size: 12pt;
+	margin: 10px;
+}
+
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-4, .label
+{
+	line-height: 35px;
+}
+
+.temp 
+{
+	font-size: 2em;
+	font-weight: bold;
+	line-height: 3;
+}
+
+.well
+{
+	padding: 30px;
+}
+
+.panel
+{
+	max-width: 80%;
+}
+
+.btn-success {
+	width: 200px;
+}
+
+.container {
+	position: relative;
+}
